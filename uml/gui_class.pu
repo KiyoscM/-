@@ -1,0 +1,123 @@
+@startuml GUI
+
+class SceneController{
+    - mainFrame : MainFrame  
+    - loginFrame : LoginFrame 
+    - registerFrame : RegisterFrame  
+    - selectModeFrame : SelectModeFrame 
+    - singleModeFrame : SingleModeFrame 
+    - MultiModeFrame : multiModeFrame
+    - OneToOneModeFrame : oneToOneModeFrame
+    + main() : void
+    + actionPerformed(ActionEvent) : void
+    + moveScene(CommonFrame , CommonFrame) : void
+
+}
+
+class CommonFrame{
+    - Color backgroundColor
+    - ImagePanel homeBackgroundPanel
+    - ImagePanel commonBackgroundPanel
+    + CommonFrame(String, Rectangle, int)
+    + getBackgroundColor() : Color
+    + setBackgroundColor(Color) : void
+    + mouseEntered(MouseEvent) : void
+    + mouseExited(MouseEvent) : void
+    + mousePressed(MouseEvent) : void
+    + mouseReleased(MouseEvent) : void
+    + mouseClicked(MouseEvent) : void
+    # initCommmonUI(String, Rectangle, int) : void
+     
+    
+}
+
+class MainFrame{
+    -sceneController SceneController
+    +MainFrame(SceneController)
+    #initMainUI() : void
+}
+
+class LoginFrame{
+
+    -sceneController SceneController 
+    -userNameTextField JTextField 
+    -passwordField JPasswordField 
+    +LoginFrame(SceneController)
+    +getData() : String[]
+    #initLoginUI() : void
+
+} 
+
+class RegisterFrame{
+
+    -sceneController SceneController
+    -newUserNameField JTextField
+    -newPasswordField JTextField
+    +RegisterFrame(SceneController)
+    #initRegisterUI() : void
+
+}
+
+class SelectModeFrame{
+
+    -sceneController SceneController
+    -singleModeButton JButton
+    -multiModeButton JButton
+    -oneToOneButton JButton
+    +SelectModeFrame(SceneController)
+    #initSelectModeUI() : void
+
+}
+
+class SingleModeFrame{
+
+    -sceneController SceneController
+    +SingleModeFrame(SceneController)
+    #initSingleModeUI() : void
+
+}
+
+class MultiModeFrame{
+
+    -sceneController SceneController
+    +MultiModeFrame(SceneController)
+    #initMultiModeUI() : void
+
+}
+
+class OneToOneModeFrame{
+
+    -sceneController SceneController
+    +OneToOneModeFrame(SceneController)
+    #initOneToOneModeUI() : void
+
+}
+
+class ImagePanel{
+
+    -img ImagePanel
+    +ImagePanel()
+    +ImagePanel(String)
+    +ImagePanel(Image)
+    #paintComponent(Graphics)
+
+}
+
+CommonFrame -down-> MainFrame
+CommonFrame -up- ImagePanel
+CommonFrame -left-> LoginFrame
+CommonFrame -up-> RegisterFrame
+CommonFrame -down-> SelectModeFrame
+CommonFrame -up-> SingleModeFrame
+CommonFrame -down-> MultiModeFrame
+CommonFrame -right-> OneToOneModeFrame
+
+MainFrame -- SceneController : 管理
+RegisterFrame -- SceneController : 管理
+LoginFrame -- SceneController : 管理
+SingleModeFrame -- SceneController : 管理
+SelectModeFrame -- SceneController : 管理
+MultiModeFrame -- SceneController : 管理
+OneToOneModeFrame -- SceneController : 管理
+
+@enduml

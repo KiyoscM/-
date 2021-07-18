@@ -1,0 +1,232 @@
+"@startuml クラス図"
+
+
+package Data {
+    class Data<<Serializable>> {
+        {static} serialVersionUID: 1L
+        {static} USER: 1
+        {static} KANJI: 2
+        {static} SINGLE_MODE_ANSWER: 3
+        {static} MULTI_MODE_ANSWER: 4
+        -type: int
+        -status: int
+        +Data(int)
+        +Data(int, int)
+        +setType(int): void
+        +getType(): int
+        +setStatus(int): void
+        +getStatus(): int
+    }
+
+    class AnswerData {
+        {static} serialVersionUID: 1L
+        {static} INIT: 0
+        {static} NOT_INIT: 1
+        -coordinate: int
+        -furigana: String
+        +AnswerData(int, int, String)
+        +setCoordinate(int): void
+        +getCoordinate(): int
+        +setFurigana(String): void
+        +getFurigana(): String
+    }
+
+    class KanjiData<<Data>> {
+        {static} serialVersionUID: 1
+        -x: int
+        -y: int
+        -kanji: String
+        -furigana: String
+        -level: int
+        +KanjiData()
+        +setX(int): void
+        +getX(): int
+        +setY(int): void
+        +getY(): int
+        +setKanji(String): void
+        +getKanji(): String
+        +setFurigana(String): void
+        +getFurigana(): String
+        +setLevel(int): void
+        +getLevel(): int
+    }
+
+    class UserData {
+        -name: String
+        -password: String
+        -secretQuestion: String
+        -secretAnswer: String
+        +UserData()
+        +setName(String): void
+        +getName(): String
+        +setPassword(String): void
+        +getPassword(): String
+        +setSecretQuestion(String): void
+        +getSecretQuestion(): String
+        +setSecretAnswer(String): void
+        +getSecretAnswer(): String
+    }
+}
+
+package Database{
+    class DBAccesser {
+        -st: Statement
+        -result: ResultSet
+        +DBAccesser()
+        +selectRecord(String): ResultSet
+        +existRecord(String): boolean
+        +createRecord(String): void
+    }
+}
+
+package Server{
+    class ServerMain {
+        +main(String[]): void
+    }
+
+    class ServerController<<Thread>> {
+        -socketServer: SocketServer
+        -accessor: DBAccesser
+        -user: User
+        -multiModel: MultiModel
+        -data: Data
+        +ServerController(SocketServer, DBAccesser)
+        +run(): void
+    }
+
+    class SocketServer<<Thread>> {
+        -ois: ObjectInputStream
+        -oos: ObjectOutputStream
+        +acceptClient(): void
+        +sendData(Data data): void
+        +receiveData(Data data): void
+    }
+}
+
+
+
+
+package Client{
+    class SocketClient<<Thread>> {
+        -ois: ObjectInputStream
+        -oos: ObjectOutputStream
+        +connectServer(String ipAdress, int port): void
+        +sendData(Data data): void
+        +receiveData(Data data): void
+    }
+
+    class View {
+        -board: int[][]
+        -kanjiData: KanjiData
+        -UserData: UserData
+        +main(): void
+        +getData(Data data): void
+        +setData(Data data): void
+        +mouseClicked(): void
+    }
+}
+
+
+package Model{
+    class KanjiModel {
+        -board: int[][]
+        -player: Player
+        +setBoard(): void
+        +getBoard(): void
+        -getPlayer(): Player
+        -setPlayer(): Player
+    }
+
+    class User {
+        -UserData: UserData
+        +selectUser(String name, String password): UserData
+        +createUser(String name, String password,
+                String secretQuestion, String secretAnswer): void
+        +selectUserQuery(): void
+        +createUserQuery(): void
+    }
+
+    class SingleModel {
+        -player: Player
+    }
+
+    class MultiModel {
+        -player: String[]
+        -board: String[][]
+        -board_size:int
+        +MultiModel(int board_size):void
+        +boardprint(): void
+        +boardinitialize(): void
+        +wordschoicecheck(String choice): int
+        +boardoutput():String[][]
+        -boardinitizlize1words(): int
+        -startposition(): ReturnValues
+        -checkempty(int tate,int yoko,int tateyoko): int
+        -wordsget(int words_size): void
+        -checkwords(String words): int
+        -wordschange(String choice): void
+        -wordssearchlist(int words_length,String search_words): String
+        -wordssearch(int words_size,int tateyoko,int tate,int yoko):ReturnValuesStart
+    }
+}
+
+database "mysql" {
+    entity "joyo_kanji" {
+        id
+        kanji
+        furigana
+    }
+
+    entity "kanji" {
+        id
+        kanji
+        furigana
+        level
+    }
+
+    entity "jukugo" {
+        id
+        kanji
+        furigana
+    }
+
+    entity "sanji_jukugo" {
+        id
+        kanji
+        furigana
+    }
+
+    entity "yoji_jukugo" {
+        id
+        kanji
+        furigana
+    }
+
+    entity "user"{
+        name
+        password
+        secret_question
+        secret_answer
+    }
+}
+
+
+
+Data <|-- KanjiData
+Data <|-- UserData
+Data <|-- AnswerData
+Data -left- SocketClient
+Data -right- SocketServer
+SocketClient -- View
+SocketServer -- ServerController
+SocketServer -right- ServerMain
+ServerController -- User
+ServerController -- KanjiModel
+ServerController -right- DBAccesser
+KanjiModel <|-- MultiModel
+KanjiModel <|-- SingleModel
+User -- mysql
+KanjiModel -- mysql
+
+
+"@enduml クラス図"
