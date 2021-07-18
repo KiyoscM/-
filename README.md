@@ -7,18 +7,18 @@
 しかし成果として，どのようなアプリであったかを残したいと考え，こちらを用意しました．
 
 開発メンバーは5人で，
-[Hiroyuki Okumura](https://github.com/h1royuki229)，
-[high-tail](https://github.com/high-tail)，
-[Takamichi Wada](https://github.com/wadayamada)と，
+[Hiroyuki Okumura](https://github.com/h1royuki229){:target="_blank"}，
+[high-tail](https://github.com/high-tail){:target="_blank"}，
+[Takamichi Wada](https://github.com/wadayamada){:target="_blank"}と，
 マネージャが1人です．
 
 私は，次項で述べますシングルプレイモードのアルゴリズムと実装に携わりました．
 
 # 2. アプリの概要
 
-![homeSample](images/homeSample.png)
+![homeSample](images/homeSample.png){:target="_blank"}
 
-本アプリは，[日本漢字能力検定](https://www.kanken.or.jp/kanken/)の受検者をターゲットとした，**漢字学習支援のためのパズルゲームアプリ**です．
+本アプリは，[日本漢字能力検定](https://www.kanken.or.jp/kanken/){:target="_blank"}の受検者をターゲットとした，**漢字学習支援のためのパズルゲームアプリ**です．
 漢字学習をパズルゲームにしてしまうことで，利用者が楽しく学習を進めることができるのではないかというコンセプトがあります．
 
 利用者ごとに難易度を設定することができ，選択できる難易度は，
