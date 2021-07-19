@@ -10,7 +10,7 @@
 [Hiroyuki Okumura](https://github.com/h1royuki229)，
 [high-tail](https://github.com/high-tail)，
 [Takamichi Wada](https://github.com/wadayamada)と，
-マネージャが1人です．
+マネージャー兼デザイナーが1人です．
 
 私は，次項で述べますシングルプレイモードのアルゴリズムと実装に携わりました．
 
